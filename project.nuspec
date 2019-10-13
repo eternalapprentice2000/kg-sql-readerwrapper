@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>KG.System.Data.SqlClient.Extensions.ReaderWrapper</id>
+        <version>0.0.0</version>
+        <description>A Simple Wrapper for System.Data.SqlClient</description>
+        <authors>Kenneth Garza</authors>
+        <owners>Kenneth Garza</owners>
+        <projectUrl>https://github.com/eternalapprentice2000/kg-sql-readerwrapper</projectUrl>
+        <license type="expression">MIT</license>
+    </metadata>
+</package>

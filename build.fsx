@@ -2,7 +2,8 @@
         nuget Fake.Core.Target              5.17.0 
         nuget Fake.Core.ReleaseNotes 
         nuget Fake.DotNet.Cli
-        nuget Fake.DotNet.AssemblyInfoFile //"
+        nuget Fake.DotNet.AssemblyInfoFile 
+        nuget Fake.IO.FileSystem  //"
 
 #load "./.fake/build.fsx/intellisense.fsx"
 
@@ -10,8 +11,12 @@ open Fake.Core
 open Fake.Core.TargetOperators
 
 open Fake.DotNet
+open Fake.DotNet.NuGet
+
+open Fake.IO
 
 let ProjectFile = "KG.System.Data.SqlClient.Extensions.ReaderWrapper.csproj"
+let LicenseUrl = "https://github.com/eternalapprentice2000/kg-sql-readerwrapper/blob/master/LICENSE"
 
 let BuildTarget = Target.create
 let log         = Trace.log
@@ -23,6 +28,13 @@ let getVersion =
 
 BuildTarget "Clean" (fun _ ->
     log "Clean Dirs"
+
+    // clean deploy
+    Directory.delete("./deploy")
+    Directory.delete("./bin")
+    Directory.delete("./obj")
+
+    Directory.create("./deploy")
 )
 
 BuildTarget "AssemblyInfo" (fun _ ->
@@ -40,7 +52,7 @@ BuildTarget "AssemblyInfo" (fun _ ->
 )
 
 BuildTarget "DotnetPack" (fun _ ->
-    log "run dotnet pack command"
+    log "run dotnet build command"
 
     let version = getVersion.NugetVersion
 
@@ -48,6 +60,7 @@ BuildTarget "DotnetPack" (fun _ ->
         { defaults with 
             Properties = [
                 "PackageVersion", version
+                "PackageLicenseUrl", LicenseUrl
             ]
         }
 
@@ -61,7 +74,7 @@ BuildTarget "DotnetPack" (fun _ ->
 )
 
 BuildTarget "NugetDeploy" (fun _ ->
-    log "run nuget deploy"
+    log "Run Nugetdeploy"
 )
 
 "Clean"
